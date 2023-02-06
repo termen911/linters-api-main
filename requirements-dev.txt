@@ -1,0 +1,14 @@
+black==23.1a1
+flake8-eradicate~=1.4.0
+flake8-print~=5.0.0
+flakeheaven~=3.2.1
+isort~=5.11.4
+locust~=2.14.2
+mypy~=0.991
+perflint~=0.7.3
+pip-check-updates~=0.18.1
+pre-commit~=3.0.1
+pylint~=2.15.10
+pytest~=7.2.1
+pytest-cov~=4.0.0
+pytest-order~=1.0.1

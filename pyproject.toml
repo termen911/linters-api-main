@@ -1,0 +1,54 @@
+[tool.black]
+line-length = 90
+
+[tool.isort]
+profile = "black"
+line_length = 90
+
+[tool.flakeheaven]
+max_line_length = 95
+exclude = ["venv", "migrations", "jrpc/openapi/types.py"]
+
+[tool.flakeheaven.plugins]
+pycodestyle = ["+*", "-E501", "-W503"]
+pyflakes = ["+*"]
+flake8-print = ["+*"]
+flake8-eradicate = ["+*"]
+pylint = [
+    "+*",
+    "-C011?", # Missing ? docstring (missing-?-docstring)
+    "-C0301", # Line too long (?/95) (line-too-long)
+    "-W0611", # Duplicate of "F401" (unused-import)
+    "-R0903", # Too few public methods (?/2) (too-few-public-methods)
+    "-W8201", # Consider moving this expression outside of the loop. (loop-invariant-statement)
+    "-W0511", # (fix-me)
+    "-R0913", # Too many arguments (?/5) (too-many-arguments)
+    "-R0914", # Too many locals (?/15) (too-many-locals)
+]
+
+[tool.pylint."BASIC"]
+good-names = ["f", "e", "id"]
+load-plugins = ["perflint"]
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+warn_return_any = true
+warn_unused_configs = true
+strict = true
+implicit_reexport = true
+disallow_untyped_decorators = false
+exclude = [
+    "venv/", # external code
+]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "--exitfirst -vv --cov --cov-report=html --cov-fail-under=90"
+testpaths = ["tests"]
+
+# ↓ Per-files configuration
+[tool.flakeheaven.exceptions."*/__init__.py"]
+pyflakes = [
+    "-F401", # imported but unused
+]
