@@ -14,3 +14,7 @@
   * ```bash
     docker compose up --build --force-recreate -d
     ```
+* Documentation
+  * ```bash
+    http://x.x.x.x/docs#/
+    ```
