@@ -1,0 +1,35 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  REGISTRY: "rg.cdo-global.ru/assessment"
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to Harbor RG
+        uses: docker/login-action@v2
+        with:
+          registry: rg.cdo-global.ru
+          username: drone
+          password: ${{ secrets.HR_PASSWORD }}
+
+      - name: Create .env
+        with:
+          envkey_OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          directory: ./
+          file_name: .env
+      - name: Build and push generator
+        run: |
+          docker build -f Dockerfile -t $REGISTRY/openai:latest .
+          docker push $REGISTRY/generator:latest
